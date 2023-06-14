@@ -56,6 +56,8 @@ print (cleveland.loc[1])
 cleveland.head()
 
 
+
+
 # In[8]:
 
 
@@ -89,6 +91,11 @@ data.describe()
 
 data.hist(figsize = (12, 12))
 plt.show()
+x=int(len(data)/2)
+data2=data[x:-1]
+data=data[0:x]
+
+data2.to_csv("heart_statlog_cleveland_hungary_final2.csv")
 
 
 # In[13]:
@@ -268,11 +275,15 @@ class ClientLogR(fl.client.NumPyClient):
 # In[38]:
 
 
-fl.client.start_numpy_client(server_address="localhost:5006", client= ClientLogR())
+fl.client.start_numpy_client(server_address="localhost:5001", client= ClientLogR())
 
 
  # In[ ]:
+import diffprivlib.models as dp
+import numpy as np
+from sklearn.linear_model import LogisticRegression
 
-
+dp_clf = dp.LogisticRegression(random_state=0)
+dp_clf.fit(X_train, y_train)
 
 

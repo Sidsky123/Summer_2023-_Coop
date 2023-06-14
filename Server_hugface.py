@@ -50,11 +50,24 @@ if __name__ == "__main__":
         min_available_clients=2,
         evaluate_fn=get_evaluate_fn(model),
         on_fit_config_fn=fit_round,)
-    fl.server.start_server(server_address="localhost:5006", strategy=strategy, config=fl.server.ServerConfig(num_rounds=3))
+    fl.server.start_server(server_address="localhost:5000", strategy=strategy, config=fl.server.ServerConfig(num_rounds=3))
 
 
 # In[ ]:
 
 
 
+# class SaveModelStrategy(fl.server.strategy.FedAvg):
+#     def aggregate_fit(
+#         self,
+#         rnd: int,
+#         results: List[Tuple[fl.server.client_proxy.ClientProxy, fl.common.FitRes]],
+#         failures: List[BaseException],
+#     ) -> Optional[fl.common.Weights]:
+#         weights = super().aggregate_fit(rnd, results, failures)
+#         if weights is not None:
+#             # Save weights
+#             print(f"Saving round {rnd} weights...")
+#             np.savez(f"round-{rnd}-weights.npz", *weights)
+#         return weights
 
